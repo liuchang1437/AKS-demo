@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sum-logic
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 7070
+  selector:
+    app: sum-logic

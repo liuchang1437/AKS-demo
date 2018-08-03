@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod                                            
+metadata:
+  name: sum-webapp 
+  labels:
+    app: sum-webapp                                 
+spec:                                                
+  containers:
+    - image: liuchang/summarization-webapp
+      name: sum-webapp                              
+      ports:
+        - containerPort: 8080                          

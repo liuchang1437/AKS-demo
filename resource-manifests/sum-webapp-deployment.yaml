@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sum-webapp
+spec:
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: sum-webapp
+    spec:
+      containers:
+        - image: liuchang/summarization-webapp:v1.0.0
+          imagePullPolicy: Always
+          name: sum-webapp
+          env:
+            - name: SUM_LOGIC_API_URL
+              value: "http://sum-logic"
+          ports:
+            - containerPort: 8080

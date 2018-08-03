@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sum-logic
+spec:
+  replicas: 2
+  minReadySeconds: 15
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: sum-logic
+    spec:
+      containers:
+        - image: liuchang/summarization-logic
+          imagePullPolicy: Always
+          name: sum-logic
+          ports:
+            - containerPort: 7070

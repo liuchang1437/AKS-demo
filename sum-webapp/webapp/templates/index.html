@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='default.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="../static/default.css"> -->
+    <title>Summarize an article</title>
+
+    <script language="JavaScript">
+        function submitForm(){
+            var text = document.getElementById("text").value;
+            var title = document.getElementById("title").value;
+            if(title && text){
+                fetch("{{ webapp_lb_url }}/summary",{
+                    method: "post",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        'title': title,
+                        'text': text
+                    })
+                }).then(function(response){
+                    return response.json();
+                }).then(function(data){
+                    document.getElementById("results").innerText=data['text'];
+                });
+            }
+        }
+
+
+
+    </script>
+
+</head>
+<body>
+    <div id="container">
+            <form id="form" name="form" action="/"" method="post">
+                    <div id="logo">Summarize an article in seconds</div>
+                    <div id="space"></div>
+                    <div id="form">
+                        <input id="title" type="text" name="title" style="width:500px" required placeholder="Copy the title here"/>
+                        <textarea id="text" name="text" rows="20" required placeholder="Copy the text here..."></textarea>
+                        <input id="submit" type="button" onclick="submitForm()" value="Summarize!"/>
+                    </div>
+                    <div id="space"></div>
+                    <div id="space"></div>
+                    <div id="results"></div>
+                    </div> 
+            </form>
+    </div>     
+</body>
+</html>
